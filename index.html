@@ -54,6 +54,7 @@ width:55px;
 height:55px;
 border-radius:10px;
 object-fit:cover;
+cursor:pointer;
 }
 
 .product-info{
@@ -131,6 +132,37 @@ border-radius:12px;
 font-size:15px;
 }
 
+/* POPUP GAMBAR */
+.modal{
+display:none;
+position:fixed;
+z-index:999;
+padding-top:60px;
+left:0;
+top:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.8);
+}
+
+.modal img{
+margin:auto;
+display:block;
+max-width:90%;
+max-height:80%;
+border-radius:12px;
+}
+
+.close{
+position:absolute;
+top:20px;
+right:25px;
+color:white;
+font-size:28px;
+font-weight:bold;
+cursor:pointer;
+}
+
 </style>
 </head>
 
@@ -146,7 +178,7 @@ font-size:15px;
 
 <!-- PRODUK -->
 <div class="product">
-<img src="https://raw.githubusercontent.com/mahirdigital5-cmd/formpemesanan-korekapi/main/korek.png">
+<img src="https://raw.githubusercontent.com/mahirdigital5-cmd/formpemesanan-korekapi/main/korek.png" onclick="bukaGambar(this.src)">
 <div class="product-info">
 <div class="product-title">Korek Api Jumbo</div>
 <div class="product-price">Rp59.000</div>
@@ -205,6 +237,12 @@ font-size:15px;
 </div>
 </div>
 
+<!-- MODAL GAMBAR -->
+<div id="modalGambar" class="modal" onclick="tutupGambar()">
+<span class="close">&times;</span>
+<img id="imgModal">
+</div>
+
 <script>
 
 var harga1=59000;
@@ -222,7 +260,6 @@ return;
 
 document.getElementById("summaryBox").style.display="block";
 
-/* LOGIKA BUNDLING */
 var pasangan=Math.floor(qty/2);
 var sisa=qty%2;
 
@@ -268,30 +305,35 @@ alert("Lengkapi alamat 😊");
 return;
 }
 
-/* HITUNG */
 var pasangan=Math.floor(qty/2);
 var sisa=qty%2;
 var total=(pasangan*harga2)+(sisa*harga1);
 
 var pesan=
 "Halo kak, saya ingin pesan Korek Api Jumbo.%0A%0A"+
-
 "*Nama:* "+nama+"%0A%0A"+
-
 "*Alamat:*%0A"+
 jalan+" RT."+rt+" No."+rumah+"%0A"+
 "("+catatan+")%0A"+
 kel+", "+kec+"%0A"+
 kota+", "+prov+"%0A%0A"+
-
 "*Jumlah:* "+qty+" pcs%0A"+
 "*Pembayaran:* "+pembayaran+"%0A"+
 "Ongkir: _*Rp0*_%0A"+
 "*Total:* Rp"+total.toLocaleString("id-ID")+"%0A%0A"+
-
 "Mohon diproses ya 🙏";
 
 window.location.href="https://api.whatsapp.com/send?phone=15558770694&text="+pesan;
+}
+
+/* FITUR ZOOM GAMBAR */
+function bukaGambar(src){
+document.getElementById("modalGambar").style.display="block";
+document.getElementById("imgModal").src=src;
+}
+
+function tutupGambar(){
+document.getElementById("modalGambar").style.display="none";
 }
 
 </script>
